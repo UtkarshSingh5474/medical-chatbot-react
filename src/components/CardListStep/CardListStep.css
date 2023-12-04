@@ -1,0 +1,126 @@
+.containerStyle {
+}
+
+.cardStyle {
+  border: 1px solid #ccc !important;
+  padding: 10px !important;
+  margin: 10px !important;
+  width: 200px !important;
+  border-radius: 10px !important; /* fixed */
+  background-color: #f9f9f9 !important; /* fixed */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important; /* fixed */
+  display: flex !important;
+  flex-direction: column !important; /* fixed */
+}
+.priceStyle {
+  font-family: "Ubuntu", sans-serif !important;
+  font-size: 18px !important;
+  font-weight: bold !important;
+  margin-top: 10px !important;
+  margin-bottom: 6px !important;
+}
+.headingStyle {
+  font-family: "Rubik", sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 300 !important;
+  margin-top: 10px !important;
+  line-height: 1.2 !important;
+  max-height: 2.4em !important;
+  min-height: 2.4em !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  margin-bottom: 6px !important;
+}
+
+.categoryStyle {
+  margin-top: 10px !important;
+  font-family: "Rubik", sans-serif !important;
+  font-weight: bold;
+  font-size: 26px !important;
+  margin-top: 10px !important;
+  margin-top: 10px !important;
+  text-decoration: underline !important;
+}
+
+.imageStyle {
+    min-width: 160px !important; /* Set the minimum width for the image */
+    min-height: 175px !important; /* Set the minimum height for the image */
+    max-width: 160px !important; /* Set the maximum width for the image */
+    max-height: 175px !important; /* Set the maximum height for the image */
+    width: auto !important; /* Allow the width to adjust based on the image aspect ratio */
+    height: auto !important; /* Allow the height to adjust based on the image aspect ratio */
+    margin: 0 auto !important; /* Center the image horizontally */
+    display: block !important; /* Ensure the image behaves as a block element */
+    border-radius: 8px !important; /* Apply rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important; /* Add a little shadow */
+}
+
+.linkStyle {
+  display: inline-block !important;
+  outline: 0 !important;
+  cursor: pointer !important;
+  border: none !important;
+  height: 45px !important;
+  border-radius: 7px !important;
+  background-color: #ff9f00 !important;
+  color: white !important;
+  padding-top: 10px !important;
+  font-weight: bold !important;
+  font-size: 14px !important;
+  font-family: "Rubik", sans-serif !important;
+  text-align: center !important;
+  box-shadow: 0 2px 6px 0 rgba(255, 240, 0, 0.39) !important; /* Reduced shadow spread */
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+
+.viewSimilarStyle {
+  border: 4px solid black !important;
+  padding: 16px 24px !important;
+  position: relative !important;
+  background-color: transparent !important;
+  margin-top: 100px !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
+  height: 100px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: transform 0.2s, width 0.2s;
+  color: black !important;
+  font-family: "Rubik", sans-serif !important;
+  font-weight: bolder !important;
+}
+
+.viewSimilarStyle span {
+  font-size: 24px !important;
+  text-transform: uppercase !important;
+  font-weight: bold !important;
+  font-family: "Roboto", sans-serif !important;
+  letter-spacing: 5px !important;
+}
+
+.viewSimilarStyle:after {
+  position: absolute !important;
+  top: 10px !important;
+  left: 10px !important;
+  height: 100% !important;
+  width: 100% !important;
+  background-color: #ffea00 !important;
+  content: "" !important;
+  z-index: -1 !important;
+  transform: translate(0, 0);
+  transition: transform 0.2s ease-out, width 0.2s ease-out;
+}
+
+.viewSimilarStyle:hover:after {
+  transform: translate(-10px, -10px);
+  width: calc(100% + 20px);
+}
+
+.viewSimilarStyle:active:after {
+  width: 100%;
+}
