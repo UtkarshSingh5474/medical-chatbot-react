@@ -3,7 +3,7 @@ import "./App.css";
 import ChatBot from "react-simple-chatbot";
 import CardListStep from "./components/CardListStep/CardListStep";
 import {
-  getCombinedOutfitTextWithSearchResultsApiRequest
+  getCombinedOutfitTextWithSearchResultsApiRequest, getOpenAIResponse
 } from "./libs/api";
 import Header from "./components/Header/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -106,7 +106,7 @@ class Chatbot extends React.Component {
     // Update the initial system message
     initialSystemMessage = {
       role: "system",
-      content: `${chatbotBehaviour},userInfo:${userInfo},userMedicalHistory:${userMedicalHistory},`,
+      content: `${chatbotBehaviour},userInfo:${userInfo},userMedicalHistory:${userMedicalHistory}, medical report:${text}`,
     };
     messages = [initialSystemMessage]; // Reset chat history
 
@@ -208,7 +208,7 @@ class Chatbot extends React.Component {
 // Component for displaying API response
 class ApiResponseStep extends React.Component {
   state = {
-    message: "Generating the best outfit for you! Please wait",
+    message: "Getting response...",
   };
 
   async componentDidMount() {
@@ -225,17 +225,11 @@ class ApiResponseStep extends React.Component {
     // API request to get outfit information
     console.log("messages", messages);
 
-    getCombinedOutfitTextWithSearchResultsApiRequest(messages, userInfo)
+    getOpenAIResponse(messages)
       .then((response) => {
         console.log("response:", response);
-        // Format API response
-        const outfitOverview = response.outfitOverview;
-        let formattedMessage = outfitOverview.replace(/\n/g, "<br />");
-        formattedMessage = formattedMessage.replace(
-          /(\d+\.\s*[^:]+)(:)/g,
-          "<strong>$1</strong>$2"
-        );
-        const message = formattedMessage;
+      
+        const message = response;
 
         // Assistant's response
         const modelResponse = {
@@ -245,18 +239,9 @@ class ApiResponseStep extends React.Component {
         messages.push(modelResponse); // Add model response to messages array
 
         this.setState({ message }, () => {
-          if (message.includes("1.")) {
-            // Trigger next step to show clothing options
-            triggerNextStep({
-              value: response.clothingItems,
-              trigger: "showCardList",
-            });
-          } else {
-            // Trigger next step for user input
-            triggerNextStep({
-              trigger: "userInput",
-            });
-          }
+          triggerNextStep({
+            trigger: "userInput",
+          });
         });
       })
       .catch((error) => {

@@ -1,9 +1,25 @@
+import OpenAI from "openai";
+
 // apiFunctions.js
 
 //var apiUrlBase = "http://127.0.0.1:8000/"
+//var apiUrlBase = "https://outfitgeneratorapi-i3odb6kjxq-em.a.run.app/";
 var apiUrlBase = "https://outfitgeneratorapi-i3odb6kjxq-em.a.run.app/";
 
 // apiFunctions.js
+
+
+//openai call
+export async function getOpenAIResponse(messages) {
+  const completion = await openai.chat.completions.create({
+    messages: messages,
+    model: "gpt-3.5-turbo",
+  });
+
+  console.log("completion", completion);
+  //return text from openai
+  return completion.choices[0].message.content;;
+}
 
 export async function getOverviewText(input) {
   const apiUrl = apiUrlBase + `outfit_text?input=${encodeURIComponent(input)}`;
