@@ -106,7 +106,7 @@ class Chatbot extends React.Component {
     // Update the initial system message
     initialSystemMessage = {
       role: "system",
-      content: `${chatbotBehaviour},userInfo:${userInfo},userMedicalHistory:${userMedicalHistory}`,
+      content: `${chatbotBehaviour},userInfo:${userInfo},userMedicalHistory:${userMedicalHistory},`,
     };
     messages = [initialSystemMessage]; // Reset chat history
 
@@ -133,7 +133,7 @@ class Chatbot extends React.Component {
       {
         id: "1",
         message:
-          "Hello, I am StyleGenie – your virtual fashion companion, here to redefine your shopping experience through personalized outfit recommendations and engaging conversations.\nHow may i assist you today?",
+        "Hello,  I am HealthGenie - A Medical Assistant Chatbot. I can help you with your medical queries. Upload your medical report to get started.",
         trigger: "userInput",
       },
       {
@@ -174,7 +174,7 @@ class Chatbot extends React.Component {
             // Chatbot configuration
             submitButtonStyle={{ backgroundColor: "#FADB22" }}
             botAvatar="https://www.citypng.com/public/uploads/preview/hd-flipkart-round-logo-icon-transparent-png-11664325137typezbr9k9.png"
-            headerTitle="StyleGenie - Fashion Outfit Generator Chatbot"
+            headerTitle="HealthGenie - A Medical Assistant Chatbot"
             className="chatbot"
             hideHeader={false}
             customStyle={{
