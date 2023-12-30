@@ -10,8 +10,7 @@ var apiUrlBase = "https://outfitgeneratorapi-i3odb6kjxq-em.a.run.app/";
 
 //function to encryp
 
-const apiKey="paste your api key here";
-const openai = new OpenAI({apiKey:apiKey,dangerouslyAllowBrowser: true});
+const openai = new OpenAI({apiKey:process.env.REACT_APP_OPENAI_API_KEY,dangerouslyAllowBrowser: true});
 //openai call
 export async function getOpenAIResponse(messages) {
   const completion = await openai.chat.completions.create({
