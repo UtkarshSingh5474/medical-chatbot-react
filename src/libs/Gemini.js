@@ -1,53 +1,25 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
-const fs = require("fs");
 
-// Replace with your actual API key
-const API_KEY = "YOUR_API_KEY_HERE";
+// Access your API key as an environment variable
+const genAI = new GoogleGenerativeAI(process.env.REACT_APP_GEMINI_KEY);
 
-const genAI = new GoogleGenerativeAI(API_KEY);
 
-let history = []; // Store conversation history
+async function generateText(prompt) {
+  const model = genAI.getGenerativeModel({ model: "gemini-pro"});
 
-async function generateTextResponse(prompt) {
-  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-  const result = await model.generateContent({
-    history: history,
-    parts: [prompt],
+  const chat = model.startChat({
+    generationConfig: {
+      maxOutputTokens: 100,
+    },
   });
+
+
+  const result = await chat.sendMessage(prompt);
   const response = await result.response;
   const text = response.text();
-
-  history.push({ role: "user", parts: prompt });
-  history.push({ role: "model", parts: text });
-
+  console.log(chat.getHistory());
   return text;
 }
 
-async function generateTextAndImageResponse(prompt, imageFilePath) {
-  const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
-
-  const result = await model.generateContent([msg, ...imageParts]);
-  const response = await result.response;
-  const text = response.text();
-
-  return { text, history: [] }; // Vision model doesn't support chat history
-}
-
-// Function to reset history
-function resetHistory() {
-  return [];
-}
-
-// // Example usage:
-// async function main() {
-//   const textResponse = await generateTextResponse("Write a poem about a cat.");
-//   console.log(textResponse);
-
-//   const textAndImageResponse = await generateTextAndImageResponse(
-//     "Describe the contents of this image.",
-//     "path/to/image.jpg"
-//   );
-//   console.log(textAndImageResponse);
-// }
-
-// main();
+// Export for use in React component
+module.exports = { generateText };
