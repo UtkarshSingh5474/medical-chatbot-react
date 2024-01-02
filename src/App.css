@@ -8,9 +8,15 @@ body {
   font-family: "Rubik", sans-serif;
   font-size: 16px;
   overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+    Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+
 }
 html {
   font-family: "Rubik", sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+    Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+
 }
 .glfuN {
   background-color: #2874f0 !important;
@@ -123,3 +129,123 @@ html {
   font-weight: bolder;
 }
 
+
+
+.mainContainer {
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.titleContainer {
+  display: flex;
+  flex-direction: column;
+  font-size: 64px;
+  font-weight: bolder;
+  align-items: center;
+  justify-content: center;
+  font-family:"Rubik", sans-serif;
+  color: #2874f0;
+}
+.lol{
+  color: aqua;
+}
+
+.resultContainer, .historyItem { 
+  flex-direction: row;
+  display: flex;
+  width: 400px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.historyContainer {
+  flex-direction: column;
+  display: flex;
+  height: 200px;
+  align-items: center;
+  flex-grow: 5;
+  justify-content: flex-start;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 260px;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.inputContainer > .errorLabel {
+  color: red;
+  font-size: 12px;
+}
+
+
+.inputBox {
+  height: 48px;
+  width: 400px;
+  font-size: large;
+  border-radius: 8px;
+  border: 1px solid grey;
+  padding-left: 8px;
+}
+
+.inputButton{
+  border: none;
+  background: rgb(21, 94, 228);
+  color: white;
+  padding: 12px 24px;
+  margin: 8px;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+
+}
+.inputButton:hover{
+  background-color: aqua;
+  color: black;
+}
+/* RGB: (66, 133, 244)   RGB: (66, 133, 244)     RGB: (244, 160, 0)  RGB: (15, 157, 88) */
+
+.inputButton1{
+  border: none;
+  /* color:  linear-gradient(to right, rgb(66, 133, 244), rgb(219, 68, 55), rgb(244, 160, 0), rgb(15, 157, 88)); */
+
+  
+  padding: 12px 24px;
+  margin: 8px;
+  font-size: 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+.inputButton1:hover{
+  background-color: aqua;
+  color: black;
+}
+.btkabox{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-content: space-between;
+}
+
+.ipkabox{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

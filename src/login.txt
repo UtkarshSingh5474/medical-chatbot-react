@@ -1,3 +1,85 @@
+import React, { useState } from "react";
+// import { motion } from "framer-motion";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { Link } from 'react-router-dom';
+
+
+// import { getAuth } from "firebase/auth";
+import app from "./firebase.config";
+
+
+
+
+
+
+
+
+
+const Login = () => {
+
+    const auth = getAuth(app);
+  const googleProvider = new GoogleAuthProvider();
+
+  const handleLogin = () => {
+    signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        // Perform actions after successful login
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        console.error(errorMessage);
+        // Handle errors during login
+      });
+  };
+
+
+    
+   
+
+    return <div className={"mainContainer"}>
+        <div className={"titleContainer"}>
+            <div  > Health<span className="lol">Ginie</span></div>
+        </div>
+        <br />
+        <div className={"inputContainer"}>
+            <input
+                value={""}
+                placeholder="Enter your email here"
+                // onChange={ev => setEmail(ev.target.value)}
+                className={"inputBox"} />
+            <label className="errorLabel">{""}</label>
+        </div>
+        <br />
+        <div className={"inputContainer"}>
+            <input
+                value={""}
+                placeholder="Enter your password here"
+                // onChange={ev => setPassword(ev.target.value)}
+                className={"inputBox"} />
+            <label className="errorLabel">{""}</label>
+        </div>
+        <br />
+        <div className={"inputContainer"}>
+            <Link to="/App" >
+            <input
+                className={"inputButton"}
+                type="button"
+                // onClick={onButtonClick}
+                onClick={handleLogin}
+                value={"Log in"} />
+                
+                </Link>
+
+        </div>
+    </div>
+}
+
+export default Login
+
+
+
 import React from "react";
 import "./App.css";
 import ChatBot from "react-simple-chatbot";
@@ -10,10 +92,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import PacmanLoader from "react-spinners/PacmanLoader";
+import PacmanLoader from "react-spinners/PacmanLoader";
 
-
-import { generateTextResponse,generateTextAndImageResponse } from "./libs/Gemini";
 
 var chatbotKey = 0; // Key to trigger re-render
 
@@ -229,7 +309,6 @@ class ApiResponseStep extends React.Component {
     // API request to get outfit information
     console.log("messages", messages);
 
-
     getOpenAIResponse(messages)
       .then((response) => {
         console.log("response:", response);
@@ -242,8 +321,6 @@ class ApiResponseStep extends React.Component {
           content: message,
         };
         messages.push(modelResponse); // Add model response to messages array
-
-
 
         this.setState({ message }, () => {
           triggerNextStep({
@@ -273,5 +350,3 @@ class ApiResponseStep extends React.Component {
 }
 
 export default Chatbot;
-
-
