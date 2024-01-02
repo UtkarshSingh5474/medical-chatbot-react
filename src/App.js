@@ -269,13 +269,4 @@ class ApiResponseStep extends React.Component {
 
 export default Chatbot;
 
-// Component with background
-// customStyle={{
-//   // Apply custom styles for the chatbot container
-//   width: "fit-content", // Set width to fit inner content
-//   margin: "0 auto", // Center horizontally
-//   marginBottom: "40px",
-//   background: "rgba(0, 0, 0, 0)", // Transparent background
-//   boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)", // Optional: Add a shadow for better visibility
-//   borderRadius: "10px", // Rounded corners
-// }}
+
