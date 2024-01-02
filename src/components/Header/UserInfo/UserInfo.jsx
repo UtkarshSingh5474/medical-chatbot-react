@@ -77,6 +77,7 @@ function UserInfo(props) {
       setBodyType(userData.userInfo.BodyType || "");
       setCustomUserInfo(userData.userInfo.customUserInfo || "");
     }
+
   };
 
   useEffect(() => {
@@ -115,7 +116,7 @@ function UserInfo(props) {
           });
   
           // Update the parent component state or take any other necessary action
-          props.updateUserInfo(customUserInfo);
+          props.updateUserInfo(customUserInfo,1);
           setCustomUserInfo("");
           closePopup();
         } else {

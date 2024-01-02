@@ -11,7 +11,18 @@ import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { generateTextResponse,generateTextAndImageResponse } from "./libs/Gemini";
+
+import app from './firebase.config';
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  updateDoc,
+  getDoc,
+} from 'firebase/firestore';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+
+
 
 var chatbotKey = 0; // Key to trigger re-render
 
@@ -38,9 +49,12 @@ class Chatbot extends React.Component {
     chatbotKey: chatbotKey,
   };
 
-  
+  //get userinfo, userMedicalHistory from firebase
+
+
+
   // Callback function to update user information
-  updateUserInfoCallback = (newUserInfo) => {
+  updateUserInfoCallback = (newUserInfo,num) => {
     this.setState({
       userInfo: newUserInfo,
       chatbotKey: this.state.chatbotKey + 1, // Trigger re-render
@@ -53,6 +67,7 @@ class Chatbot extends React.Component {
     };
     messages = [initialSystemMessage]; // Reset chat history
 
+    if(num==1){
     // Display success toast
     toast.success(
       "User Information Updated Successfully!\nChat History is resetted",
@@ -67,7 +82,7 @@ class Chatbot extends React.Component {
         progress: undefined,
         theme: "light",
       }
-    );
+    );}
   };
 
   // Callback function to update user Medical History
@@ -112,6 +127,8 @@ class Chatbot extends React.Component {
       content: `${chatbotBehaviour},userInfo:${userInfo},userMedicalHistory:${userMedicalHistory}, medical report:${text}`,
     };
     messages = [initialSystemMessage]; // Reset chat history
+
+    
 
     // Display success toast
     toast.success(
@@ -260,6 +277,7 @@ class ApiResponseStep extends React.Component {
           });
         });
       });
+      
   }
 
   render() {

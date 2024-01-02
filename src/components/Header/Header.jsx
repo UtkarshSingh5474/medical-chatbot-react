@@ -7,6 +7,7 @@ import MedicalHistory from "./MedicalHistory/MedicalHistory";
 import UserInfo from "./UserInfo/UserInfo";
 import { Button, CircularProgress } from "@mui/material";
 import Tesseract from "tesseract.js";
+import { generateText } from "../../libs/Gemini";
 
 function Header(props) {
   const [choice, setChoice] = useState(null);
@@ -42,14 +43,12 @@ function Header(props) {
   const readImageFile = async (file) => {
     console.log("Processing image file:", file);
 
-    await Tesseract.recognize(file, "eng", {
-      logger: (info) => handleOcrProgress(info),
-    }).then(({ data: { text } }) => {
+    await generateText(file).then((text) => {
       console.log("OCR Result:", text);
       props.fileUpload(text);
       setLoading(false);
     }
-    )
+    );
 
     setLoading(false);
   };
