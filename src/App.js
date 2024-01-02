@@ -13,6 +13,8 @@ import "react-toastify/dist/ReactToastify.css";
 // import PacmanLoader from "react-spinners/PacmanLoader";
 
 
+import { generateTextResponse,generateTextAndImageResponse } from "./libs/Gemini";
+
 var chatbotKey = 0; // Key to trigger re-render
 
 // Define initial system behavior and user information
@@ -227,6 +229,7 @@ class ApiResponseStep extends React.Component {
     // API request to get outfit information
     console.log("messages", messages);
 
+
     getOpenAIResponse(messages)
       .then((response) => {
         console.log("response:", response);
@@ -239,6 +242,8 @@ class ApiResponseStep extends React.Component {
           content: message,
         };
         messages.push(modelResponse); // Add model response to messages array
+
+
 
         this.setState({ message }, () => {
           triggerNextStep({

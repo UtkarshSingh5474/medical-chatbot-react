@@ -1,38 +1,29 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const fs = require("fs");
 
-// Access your API key as an environment variable
-const genAI = new GoogleGenerativeAI(process.env.API_KEY);
+// Replace with your actual API key
+const API_KEY = "YOUR_API_KEY_HERE";
 
-// Function for text-only chat
-async function chat(msg, history = []) {
+const genAI = new GoogleGenerativeAI(API_KEY);
+
+let history = []; // Store conversation history
+
+async function generateTextResponse(prompt) {
   const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-
-  const chat = model.startChat({
-    history,
-    generationConfig: {
-      maxOutputTokens: 100,
-    },
+  const result = await model.generateContent({
+    history: history,
+    parts: [prompt],
   });
-
-  const result = await chat.sendMessage(msg);
   const response = await result.response;
   const text = response.text();
 
-  return { text, history: chat.history };
+  history.push({ role: "user", parts: prompt });
+  history.push({ role: "model", parts: text });
+
+  return text;
 }
 
-// Function for text and image path
-async function textAndImages(msg, imagePath, history = []) {
-  const imageParts = [
-    {
-      inlineData: {
-        data: fs.readFileSync(imagePath).toString("base64"),
-        mimeType: getMimeType(imagePath),
-      },
-    },
-  ];
-
+async function generateTextAndImageResponse(prompt, imageFilePath) {
   const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
 
   const result = await model.generateContent([msg, ...imageParts]);
@@ -47,19 +38,16 @@ function resetHistory() {
   return [];
 }
 
-// Helper function to determine MIME type based on path extension
-function getMimeType(path) {
-  const extension = path.split(".").pop();
-  switch (extension) {
-    case "png":
-      return "image/png";
-    case "jpg":
-    case "jpeg":
-      return "image/jpeg";
-    // Add more cases for other supported image formats
-    default:
-      throw new Error(`Unsupported image format: ${extension}`);
-  }
-}
+// // Example usage:
+// async function main() {
+//   const textResponse = await generateTextResponse("Write a poem about a cat.");
+//   console.log(textResponse);
 
-module.exports = { chat, textAndImages, resetHistory };
+//   const textAndImageResponse = await generateTextAndImageResponse(
+//     "Describe the contents of this image.",
+//     "path/to/image.jpg"
+//   );
+//   console.log(textAndImageResponse);
+// }
+
+// main();
