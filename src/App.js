@@ -193,7 +193,7 @@ class Chatbot extends React.Component {
             key={this.state.chatbotKey}
             // Chatbot configuration
             submitButtonStyle={{ backgroundColor: "#FADB22" }}
-            botAvatar="https://www.citypng.com/public/uploads/preview/hd-flipkart-round-logo-icon-transparent-png-11664325137typezbr9k9.png"
+            botAvatar="https://cdn-icons-png.flaticon.com/512/204/204225.png"
             headerTitle="HealthGenie - A Medical Assistant Chatbot"
             className="chatbot"
             hideHeader={false}
