@@ -48,7 +48,7 @@ function getFileMimeType(fileName) {
 }
 
 
-async function generateText(file) {
+export async function generateText(file) {
   // For text-and-image input (multimodal), use the gemini-pro-vision model
   const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
 
@@ -70,6 +70,3 @@ async function generateText(file) {
   const text = response.text();
   return text;
 }
-
-// Export for use in React component
-module.exports = { generateText };
