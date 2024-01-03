@@ -4,6 +4,7 @@ import {
   import App from "./App";
 
 import Login from "./Login";
+import Intro from "./Intro";
 
 
 
@@ -16,12 +17,18 @@ const router = createBrowserRouter([
 
     {
         path: "/",
-        element: <Login/>
+        element: <Intro/>
       },
 
     {
       path: "/App",
       element: <App/>,
+    
+    },
+
+    {
+      path: "/Login",
+      element: <Login/>,
     
     }
 

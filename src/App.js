@@ -10,6 +10,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { motion } from "framer-motion";
+
 // import PacmanLoader from "react-spinners/PacmanLoader";
 
 
@@ -161,16 +163,26 @@ class Chatbot extends React.Component {
     // Render the Chatbot component
     return (
       <div className="root">
+            <motion.div   whileInView={{x:0,opacity:1}}
+    initial={{x:-300,opacity:0}}
+    transition={{duration:2}}>
         <ToastContainer />
         {/* Header component */}
-        <Header
+        <Header className="App-header"
+        
           userInfo={this.state.userInfo}
           userMedicalHistory={this.state.userMedicalHistory}
           updateUserInfo={this.updateUserInfoCallback}
           updateUserMedicalHistory={this.updateUserMedicalHistory}
           fileUpload={this.fileUpload}
         />
-        <div className="chatbot-container">
+        </motion.div>
+        
+
+       
+        <motion.div whileInView={{y:0,opacity:1}}
+    initial={{y:-300,opacity:0}}
+    transition={{duration:2}} className="chatbot-container">
           <ChatBot
             key={this.state.chatbotKey}
             // Chatbot configuration
@@ -201,7 +213,7 @@ class Chatbot extends React.Component {
           >
             {/* Due to trial credits of OpenAI API, the response is slow. */}
           </p>
-        </div>
+        </motion.div>
       </div>
     );
   }
