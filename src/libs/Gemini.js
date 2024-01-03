@@ -1,4 +1,5 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const fs = require("fs");
 
 // Replace with your actual API key
 const API_KEY = "YOUR_API_KEY_HERE";
@@ -24,18 +25,17 @@ async function generateTextResponse(prompt) {
 
 async function generateTextAndImageResponse(prompt, imageFilePath) {
   const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
-  const imagePart = await model.fileToGenerativePart(imageFilePath);
-  const result = await model.generateContent({
-    history: history,
-    parts: [prompt, imagePart],
-  });
+
+  const result = await model.generateContent([msg, ...imageParts]);
   const response = await result.response;
   const text = response.text();
 
-  history.push({ role: "user", parts: prompt });
-  history.push({ role: "model", parts: text });
+  return { text, history: [] }; // Vision model doesn't support chat history
+}
 
-  return text;
+// Function to reset history
+function resetHistory() {
+  return [];
 }
 
 // // Example usage:

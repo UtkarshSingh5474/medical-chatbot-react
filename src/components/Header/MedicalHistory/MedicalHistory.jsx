@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextField, Button } from "@mui/material";
 import "../blurEffect.css";
+import app from '../../../firebase.config';
+import { getFirestore, doc, setDoc, updateDoc, getDoc } from 'firebase/firestore';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
-// Define CSS constants
 const popupContainerStyle = {
   textAlign: "center",
   backgroundColor: "rgba(39, 145, 216, 0.710)",
@@ -31,18 +33,62 @@ const popupHeaderStyle = {
 };
 
 function MedicalHistory(props) {
-  const [customMedicalHistory, setcustomMedicalHistory] = useState(
-    ""
-  );
+  const [customMedicalHistory, setCustomMedicalHistory] = useState("");
 
-  const handleSubmit = () => {
-    props.updateUserMedicalHistory(JSON.stringify(customMedicalHistory));
-    setcustomMedicalHistory("");
-    closePopup();
-  };
   const closePopup = () => {
     props.change(null);
   };
+
+  const fetchDataFromFirestore = async (userUID) => {
+    const db = getFirestore(app);
+    const userDocRef = doc(db, 'users', userUID);
+    const userDocSnapshot = await getDoc(userDocRef);
+
+    if (userDocSnapshot.exists()) {
+      const userData = userDocSnapshot.data();
+      setCustomMedicalHistory(userData.medicalHistory || "");
+    }
+  };
+
+  useEffect(() => {
+    const auth = getAuth(app);
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const userUID = user.uid;
+        fetchDataFromFirestore(userUID);
+      }
+    });
+  }, []);
+
+  const handleSubmit = async () => {
+    const auth = getAuth(app);
+
+    // Check if a user is authenticated
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const userUID = user.uid;
+
+        // Update medicalHistory field in Firestore
+        const db = getFirestore(app);
+        const userDocRef = doc(db, 'users', userUID);
+
+        // Fetch existing user data
+        const userDocSnapshot = await getDoc(userDocRef);
+        const existingUserData = userDocSnapshot.data();
+
+        // Update the medicalHistory field with the new customMedicalHistory
+        await updateDoc(userDocRef, {
+          medicalHistory: customMedicalHistory,
+        });
+
+        // Update the parent component state or take any other necessary action
+        props.updateUserMedicalHistory(customMedicalHistory);
+        setCustomMedicalHistory("");
+        closePopup();
+      }
+    });
+  };
+
   return (
     <div>
       <div>
@@ -58,24 +104,22 @@ function MedicalHistory(props) {
             <br />
 
             <div className="flex">
-            <TextField
-            
-            multiline
-            rows={12}
-              style={{ width: "80%", height: "80%", minHeight: "80%" }}
-              id="outlined-basic"
-              label="Enter Medical History"
-              variant="outlined"
-              value={customMedicalHistory}
-              onChange={(e) => setcustomMedicalHistory(e.target.value)}
+              <TextField
+                multiline
+                rows={12}
+                style={{ width: "80%", height: "80%", minHeight: "80%" }}
+                id="outlined-basic"
+                label="Enter Medical History"
+                variant="outlined"
+                value={customMedicalHistory}
+                onChange={(e) => setCustomMedicalHistory(e.target.value)}
               />
-            <br />
-            <br />
-            
-            <Button onClick={handleSubmit} variant="contained" color="primary">
-              Submit
-            </Button>
-              </div>
+              <br />
+              <br />
+              <Button onClick={handleSubmit} variant="contained" color="primary">
+                Submit
+              </Button>
+            </div>
           </div>
         </div>
       </div>
