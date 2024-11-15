@@ -50,7 +50,7 @@ function getFileMimeType(fileName) {
 
 export async function generateText(file) {
   // For text-and-image input (multimodal), use the gemini-pro-vision model
-  const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
   const prompt = "Extract text from this image:";
 
